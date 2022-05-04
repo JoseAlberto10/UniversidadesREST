@@ -1,0 +1,48 @@
+package com.ibm.academia.apirest.services;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ibm.academia.apirest.entities.Carrera;
+import com.ibm.academia.apirest.repositories.CarreraRepository;
+
+@Service           
+public class CarreraDAOImpl implements CarreraDAO     //Implementacion de la lógica
+{
+	
+	@Autowired           //Inyectar mi repositorio aqui en la implementacion
+	private CarreraRepository carreraRepository;
+
+	@Override
+	@Transactional(readOnly = true)  //es solo lectura cuando se va a consultar nada mas
+	public Optional<Carrera> buscarporId(Integer Id) 
+	{
+		return carreraRepository.findById(Id);
+	}
+
+	@Override
+	@Transactional
+	public Carrera guardar(Carrera carrera)
+	{
+		return carreraRepository.save(carrera);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<Carrera> buscarTodos() 
+	{
+		
+		return carreraRepository.findAll();
+	}
+
+	@Override
+	@Transactional
+	public void eliminarPorId(Integer Id) {
+		
+		carreraRepository.deleteById(Id);
+	}
+
+}
