@@ -1,4 +1,4 @@
-package com.ibm.academia.apirest.entities;
+package com.ibm.academia.apirest.models.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -28,6 +28,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "pabellones", schema = "universidad")
+//@Table(name = "pabellones")
 public class Pabellon implements Serializable{
 
 	@Id

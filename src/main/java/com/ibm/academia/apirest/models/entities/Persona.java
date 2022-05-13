@@ -1,4 +1,4 @@
-package com.ibm.academia.apirest.entities;
+package com.ibm.academia.apirest.models.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,18 +18,30 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "personas", schema = "universidad")
+//@Table(name = "personas")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+		use = JsonTypeInfo.Id.NAME,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "tipo"
+)
+@JsonSubTypes({
+	@JsonSubTypes.Type(value = Alumno.class, name = "alumno"),
+	@JsonSubTypes.Type(value = Profesor.class, name = "profesor"),
+	@JsonSubTypes.Type(value = Empleado.class, name = "empleado"),
+})
 public abstract class Persona implements Serializable
 {
 	@Id
@@ -58,7 +70,6 @@ public abstract class Persona implements Serializable
 	})
 	private Direccion direccion;
 	
-	
 	public Persona(Integer id, String nombre, String apellido, String dni, Direccion direccion) {
 		this.id = id;
 		this.nombre = nombre;
@@ -84,6 +95,12 @@ public abstract class Persona implements Serializable
 		return Objects.equals(dni, other.dni) && Objects.equals(id, other.id);
 	}
 	
+	@Override
+	public String toString() {
+		return "Persona [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", fechaAlta="
+				+ fechaAlta + ", fechaModificacion=" + fechaModificacion + ", direccion=" + direccion + "]";
+	}
+
 	@PrePersist
 	public void antesPersistir() 
 	{

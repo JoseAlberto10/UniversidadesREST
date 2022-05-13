@@ -1,47 +1,51 @@
 package com.ibm.academia.apirest.services;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.academia.apirest.entities.Persona;
+import com.ibm.academia.apirest.models.entities.Alumno;
+import com.ibm.academia.apirest.models.entities.Carrera;
+import com.ibm.academia.apirest.models.entities.Persona;
+import com.ibm.academia.apirest.repositories.AlumnoRepository;
 import com.ibm.academia.apirest.repositories.PersonaRepository;
 
 @Service
-public class AlumnoDAOImpl implements AlumnoDAO
+public class AlumnoDAOImpl extends PersonaDAOImpl implements AlumnoDAO
 {
-	@Autowired
-	@Qualifier("repositorioAlumnos")   //Esto inyecta el repositorio de alumno ya que el de persona no es un bean y no puede inyectarse
-	private PersonaRepository personaRepository;    //Inyectar el repositorio de la clase Padre
 	
-	@Override
-	public Optional<Persona> buscarporId(Integer Id) 
+	@Autowired
+	public AlumnoDAOImpl(@Qualifier("repositorioAlumnos")PersonaRepository repository)    //Esto inyecta el repositorio de alumno ya que el de persona no es un bean y no puede inyectarse
 	{
-		
-		return null;
+		super(repository);
 	}
 
 	@Override
-	public Persona guardar(Persona persona)
+	@Transactional(readOnly = true)
+	public Iterable<Persona> buscarAlumnoPorNombreCarrera(String nombre) 
 	{
-		
-		return null;
+		return ((AlumnoRepository)repository).buscarAlumnoPorNombreCarrera(nombre);
 	}
 
 	@Override
-	public Iterable<Persona> buscarTodos() 
+	@Transactional
+	public Persona actualizar(Persona alumnoEncontrado, Persona alumno)
 	{
-		
-		return null;
+		Persona alumnoActualizado = null;
+		alumnoEncontrado.setNombre(alumno.getNombre());
+		alumnoEncontrado.setApellido(alumno.getApellido());
+		alumnoEncontrado.setDireccion(alumno.getDireccion());
+		alumnoEncontrado.setDni(alumno.getDni());
+		alumnoActualizado = repository.save(alumnoEncontrado);
+		return alumnoActualizado;
 	}
 
 	@Override
-	public void eliminarPorId(Integer Id) 
+	@Transactional
+	public Persona asociarCarreraAlumno(Persona alumno, Carrera carrera) 
 	{
-		
-		
-	}   
-
+	    ((Alumno)alumno).setCarrera(carrera);
+		return repository.save(alumno);
+	}
 }

@@ -1,13 +1,14 @@
 package com.ibm.academia.apirest.services;
 
-import java.util.Optional;
+import com.ibm.academia.apirest.models.entities.Carrera;
 
-import com.ibm.academia.apirest.entities.Carrera;
-
-public interface CarreraDAO 
+public interface CarreraDAO extends GenericoDAO<Carrera>
 {
-	public Optional<Carrera> buscarporId(Integer Id); //metodo para buscar por ID  Optional controla los nulos
-	public Carrera guardar(Carrera carrera);          //metodo para guardar
-	public Iterable<Carrera> buscarTodos();	          //metodo para un una lista de la carrera
-	public void eliminarPorId(Integer Id);  		  //metodo para eliminar por ID
+	public Iterable<Carrera> findCarrerasByCantidadAniosEstimados(Integer cantidadAniosEstimados);
+	public Iterable<Carrera> findCarrerasByNombreContains(String nombre);
+	public Iterable<Carrera> findCarrerasByNombreContainsIgnoreCase(String nombre);
+	public Iterable<Carrera> findCarrerasByCantidadAniosEstimadosAfter(Integer cantidadAniosEstimados);
+	public Carrera actualizar(Carrera carreraEncontrada, Carrera carrera);
+	
+    public Iterable<Carrera> buscarCarrerasPorProfesorNombreYApellido(String nombre, String apellido);
 }

@@ -1,4 +1,4 @@
-package com.ibm.academia.apirest.entities;
+package com.ibm.academia.apirest.models.entities;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -32,6 +32,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "aulas", schema = "universidad")
+//@Table(name = "aulas")
 public class Aula implements Serializable
 {
 	@Id

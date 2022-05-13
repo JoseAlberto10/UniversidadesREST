@@ -1,4 +1,4 @@
-package com.ibm.academia.apirest.entities;
+package com.ibm.academia.apirest.models.entities;
 
 import java.math.BigDecimal;
 
@@ -24,6 +24,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "empleados", schema = "universidad")
+//@Table(name = "empleados")
 @PrimaryKeyJoinColumn(name = "persona_id")
 public class Empleado extends Persona
 {
