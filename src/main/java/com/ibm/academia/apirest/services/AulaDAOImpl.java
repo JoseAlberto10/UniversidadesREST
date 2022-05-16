@@ -37,4 +37,15 @@ public class AulaDAOImpl extends GenericoDAOImpl<Aula, AulaRepository> implement
 	{
 		return repository.buscarPorNumeroAula(numeroAula);
 	}
+
+	@Override
+	public Aula actualizar(Aula aulaEncontrada, Aula aula)
+	{
+        Aula aulaActualizada = null;
+        aulaEncontrada.setNumeroAula(aula.getNumeroAula());
+        aulaEncontrada.setCantidadPupitres(aula.getCantidadPupitres());
+        aulaEncontrada.setPizarron(aula.getPizarron());
+        aulaActualizada = repository.save(aulaEncontrada);
+        return aulaActualizada;
+	}
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ibm.academia.apirest.enums.TipoEmpleado;
+import com.ibm.academia.apirest.models.entities.Empleado;
 import com.ibm.academia.apirest.models.entities.Persona;
 import com.ibm.academia.apirest.repositories.EmpleadoRepository;
 import com.ibm.academia.apirest.repositories.PersonaRepository;
@@ -26,5 +27,22 @@ public class EmpleadoDAOImpl extends PersonaDAOImpl implements EmpleadoDAO
 	{
 		
 		return ((EmpleadoRepository)repository).findEmpleadoByTipoEmpleado(tipoEmpleado);
+	}
+
+	@Override
+	public Persona actualizar(Persona empleadoEncontrado, Empleado empleado)
+	{
+		Persona empleadoActualizado = null;
+		empleadoEncontrado.setNombre(empleado.getNombre());
+		empleadoEncontrado.setApellido(empleado.getApellido());
+		empleadoEncontrado.setDireccion(empleado.getDireccion());
+		empleadoEncontrado.setDni(empleado.getDni());
+
+		((Empleado)empleadoEncontrado).setTipoEmpleado(empleado.getTipoEmpleado());
+		((Empleado)empleadoEncontrado).setSueldo(empleado.getSueldo());
+		((Empleado)empleadoEncontrado).setPabellon(empleado.getPabellon());
+
+		empleadoActualizado = repository.save(empleadoEncontrado);
+		return empleadoActualizado;
 	}
 }
