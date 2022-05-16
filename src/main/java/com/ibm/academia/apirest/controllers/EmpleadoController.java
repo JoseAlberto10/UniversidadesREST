@@ -101,7 +101,7 @@ public class EmpleadoController
 	/**
 	 * Endpoint para actualizar(PUT) un empleado por Id
 	 * @param empleadoId  Parametro para buscar el empleado por id
-	 * @param profesor    Objeto JSON con la informacion a modificar
+	 * @param empleado    Objeto JSON con la informacion a modificar
 	 * @return            Retorna un objeto empleado de tipo Persona 
 	 * @author JARP - 16/05/2022
 	 */
